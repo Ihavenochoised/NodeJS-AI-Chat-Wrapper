@@ -1,4 +1,6 @@
+import 'dotenv/config';
 import express from "express";
+import session from "express-session"
 import path from "path";
 import { fileURLToPath } from "url";
 import pageRouter from "./routes/routes.js";
@@ -9,6 +11,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Middleware
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'defaultsecretthatssuperlongandsecure1234567890!@#$%^&*()XYZ',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false, // Set to true if using HTTPS
+        httpOnly: true,
+        sameSite: 'lax'
+    } 
+}));
 
 // 🧩 Routers
 app.use("/", pageRouter);

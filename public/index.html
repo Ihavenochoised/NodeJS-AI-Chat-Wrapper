@@ -1,1 +1,40 @@
-Home Page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    
+    <!-- Mermaid for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    
+    <!-- Marked for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+    
+    <title>AI Chat</title>
+</head>
+<body>
+    <div class="chatbox">
+        <div class="chat-header">
+            <h1>AI Chat</h1>
+            <button id="clearButton" class="clear-btn" title="Clear chat history">🗑️</button>
+        </div>
+        <div class="chatlogs" id="chatlogs">
+            <!-- Chat messages will be appended here -->
+        </div>
+        <div class="chat-form">
+            <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+    <script src="/javascripts/index.js"></script>
+</body>
+</html>
