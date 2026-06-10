@@ -92,7 +92,10 @@ You can use the following formatting in your responses:
             model: 'openrouter/free',
             messages: messages,
             temperature: 0.9,
-            max_tokens: 1000
+            max_tokens: 1000,
+            reasoning: {
+                "exclude": true
+            }
         }, {
             headers: {
                 'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
