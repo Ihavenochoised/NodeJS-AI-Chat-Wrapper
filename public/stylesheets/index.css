@@ -92,7 +92,7 @@ body {
 .message.bot h3 { font-size: 1.1em; }
 
 .message.bot p {
-    margin: 8px 0;
+    margin: 8px 0 0 0;
     line-height: 1.5;
 }
 
