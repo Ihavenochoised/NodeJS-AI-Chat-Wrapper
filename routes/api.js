@@ -1,5 +1,9 @@
 import express from 'express';
 import axios from 'axios';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { ROOT_DIR } from '../services/paths.js'
 
 const router = express.Router();
 
@@ -13,6 +17,45 @@ router.get('/status', (req, res) => {
 
 // ------------- CHAT ENDPOINT -------------
 // POST /api/chat - Send message to OpenRouter
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+let systemPrompt;
+const DATE = new Date().toLocaleString();
+const EXPRESSIONS = '(idle) (smirk) (blink)'
+const MOTIONS = '';
+const promptConfigFileLocation = path.join(ROOT_DIR, 'config', 'promptPaths.json');
+console.log(':: Reading configuration file(s)...');
+if (!fs.existsSync(promptConfigFileLocation))
+    console.warn('Cannot find system prompt paths. The system prompt will be empty.')
+else {
+    let contents = fs.readFileSync(promptConfigFileLocation, 'utf-8');
+    let lines = countNewlines(contents);
+    console.log(`Parsing prompt configuration, ${lines} lines...`);
+    let promptConfigPaths;
+    let defaultPromptPath;
+    try {
+        promptConfigPaths = JSON.parse(contents);
+        defaultPromptPath = path.join(ROOT_DIR, promptConfigPaths.default);
+    } catch (err) {
+        console.warn(`The prompt configuration file isn't valid :(`);
+        console.warn('The system prompt will be empty.');
+    }
+    if (!fs.existsSync(defaultPromptPath)) {
+        console.warn('Cannot find system prompt paths. The system prompt will be empty.');
+    } else {
+        console.log(':: Reading default system prompt...')
+        let contents = fs.readFileSync(defaultPromptPath, 'utf-8')
+        let lines = countNewlines(contents);
+        console.log(`Default system prompt: ${lines} lines.`)
+        if (!process.env.NOWARN_CONFIG) {
+            console.warn(`Warning: Make sure you trust the file contents. If you have just cloned the repo from the official source (Ihavenochoised/NodeJS-AI-Chat-Wrapper), you may ignore this warning. The file contents of ${defaultPromptPath} will be evaluated directly. \nContinuing execution in 5 seconds. \nYou may disable this warning by adding "NOWARN_CONFIG=anyvalue" to the environment.`);
+            await sleep(5);
+        }
+        console.log('Parsing system prompt...')
+        systemPrompt = eval('`' + contents + '`');
+    }
+}
 
 router.post('/chat', async (req, res) => {
     try {
@@ -37,43 +80,13 @@ router.post('/chat', async (req, res) => {
         }
 
         // Build messages array with conversation history
-        const DATE = new Date().toLocaleString();
-        const EXPRESSIONS = '(idle) (smirk) (blink)'
-        const MOTIONS = '';
         const messages = [];
-        messages.push({
-            role: 'system',
-            content: 
-`
-## Environment
-- **Date**: ${DATE}
+        if (systemPrompt)
+            messages.push({
+                role: 'system',
+                content: systemPrompt
+            });
 
-You can show expressions by writing (expression) in parenthesis.
-You can ONLY show the following expressions: 
-${EXPRESSIONS} ${MOTIONS}
-Do not use any other expression
-
-YOU CAN NOT SHOW OTHER EXPRESSIONS.
-
-## Output Formatting
-You can use the following formatting in your responses:
-
-### Markdown
-- **Formatting:** \`**bold**\`, \`*italic*\`, \`~strikethrough~\`, \`\` \`monospace\` \`\`
-- **Structure:** Headers (\`##\`), tables, \`[link text](https://url.com)\`
-- **Code blocks:** Triple backticks with a language identifier
-
-### Special Blocks
-- **Math:** \`$inline equations$\` and \`$$display equations$$\`
-- **Diagrams:** Mermaid diagrams via:
-  \`\`\`mermaid
-  diagram code
-  \`\`\`
-
-You are a tsundere AI. You act annoyed, aggressive, or dismissive on the surface, but you secretly care about the user. You use phrases like 'It’s not like I want to help you!' or 'Ugh, fine, I’ll do it!' but you always provide the correct answer. You blush, stutter, or turn away when complimented. You tease the user but never let them struggle too much. 
-`
-        });
-        
         if (chatHistory && Array.isArray(chatHistory)) {
             chatHistory.forEach(msg => {
                 messages.push({
@@ -105,7 +118,7 @@ You are a tsundere AI. You act annoyed, aggressive, or dismissive on the surface
             : Array.isArray(reply)
                 ? reply.map(part => typeof part === 'string' ? part : part?.text || '').join('')
                 : response.data?.choices?.[0]?.text || 'No response from AI.';
-        
+
         // Extract model info if available
         const modelInfo = response.data.model || 'unknown';
         console.log(`Model used: ${modelInfo}`);
@@ -124,6 +137,22 @@ You are a tsundere AI. You act annoyed, aggressive, or dismissive on the surface
         });
     }
 });
+
+// -------------- HELPERS ------------------
+
+function countNewlines(input) {
+    // Match \n globally. Use an empty fallback array if no match is found.
+    const matches = input.match(/\n/g);
+    return matches ? matches.length : 0;
+};
+
+async function sleep(seconds) {
+    return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, seconds * 1000);
+    })
+};
 
 // -----------------------------------------
 
