@@ -56,14 +56,15 @@ else {
         systemPrompt = eval('`' + contents + '`');
     }
 }
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free';
-process.env.OPENROUTER_MODEL ? console.log(`Using ${OPENROUTER_MODEL}`) : console.log(`Using default model: ${OPENROUTER_MODEL}`);
 
 router.post('/chat', async (req, res) => {
     try {
         const { message, chatHistory } = req.body;
         const freeMessageLimit = 5;
         const loggedIn = req.session.loggedIn || false;
+
+        const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free';
+        process.env.OPENROUTER_MODEL ? console.log(`Using ${OPENROUTER_MODEL}`) : console.log(`Using default model: ${OPENROUTER_MODEL}`);
 
         console.log('Received message:', message);
         console.log('Chat history length:', chatHistory ? chatHistory.length : 0);
