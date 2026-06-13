@@ -56,6 +56,8 @@ else {
         systemPrompt = eval('`' + contents + '`');
     }
 }
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free';
+process.env.OPENROUTER_MODEL ? console.log(`Using ${OPENROUTER_MODEL}`) : console.log(`Using default model: ${OPENROUTER_MODEL}`);
 
 router.post('/chat', async (req, res) => {
     try {
@@ -98,7 +100,7 @@ router.post('/chat', async (req, res) => {
 
         // Call OpenRouter API with full conversation context
         const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-            model: 'openrouter/free',
+            model: OPENROUTER_MODEL,
             messages: messages,
             temperature: 0.9,
             reasoning: {
