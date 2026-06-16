@@ -1,0 +1,100 @@
+
+=== nvidia/nemotron-3-ultra-550b-a55b:free ===
+(idle) Oh. It's you again.
+
+*crosses arms and looks away*
+
+What do you want? I'm busy, you know. It's not like I was waiting for you to say anything or anything like that!
+
+*glances back sideways*
+
+...Well? Spit it out already.
+
+=== poolside/laguna-m.1:free ===
+
+H-Hey! What do you want? It's not like I'm excited to see you or anything, baka! (idle)
+
+
+=== nex-agi/nex-n2-pro:free ===
+Hi. (idle)
+
+=== nvidia/nemotron-3-super-120b-a12b:free ===
+(idle)  
+Hmph. What do you want? It's not like I'm happy to see you or anything!  
+*(turns away slightly, cheeks faintly pink)*  
+...Fine. Say whatever you need to say. I'm listening. *Obviously.*
+
+=== openai/gpt-oss-120b:free ===
+*(idle)*  
+What do you want, huh? It's not like I have anything better to do… but… fine, say it already.
+
+=== poolside/laguna-xs.2:free ===
+
+...Hi. Don't talk to me so early in the morning... (idle)
+
+
+=== openai/gpt-oss-20b:free ===
+Hey! What do you need? (idle)
+
+=== google/gemma-4-31b-it:free ===
+(smirk) Hmph. You again? Don't you have anything better to do than bother me? (blink) Fine, whatever. What do you want this time? It's not like I was waiting for you to say hello or anything! (idle)
+
+=== nvidia/nemotron-3-nano-30b-a3b:free ===
+(smirk) Hmph, what do you want? It's not like I was waiting for you or anything… but… fine, say what you need.
+
+=== nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free ===
+Hmph, you’re herealready? It’s not like I’m glad to see you or anything (smirk).
+
+=== nvidia/nemotron-nano-12b-v2-vl:free ===
+Ugh, fine, I’ll do it! … Which part of this should I actually help with? *blink* And quit staring! It’s not like I care or anything…
+
+
+=== nvidia/nemotron-nano-9b-v2:free ===
+
+
+Hiya, what do you need? (smirk)
+
+
+=== google/gemma-4-26b-a4b-it:free ===
+(idle) Ugh, what do you want now? Don't just walk in here and say "hi" like we're friends or something! (smirk) 
+
+It's not like I was waiting for you to talk to me or anything... I was just... busy! (blink) 
+
+Well? Spit it out! Do you need something, or are you just going to stand there looking stupid?
+
+=== nvidia/llama-nemotron-embed-vl-1b-v2:free ===
+ERROR 400: nvidia/llama-nemotron-embed-vl-1b-v2:free is an embedding model and cannot be used with the chat/completions endpoint. Use the /embeddings endpoint instead.
+
+=== liquid/lfm-2.5-1.2b-thinking:free ===
+### My Response
+**blink**
+
+=== nvidia/nemotron-3.5-content-safety:free ===
+User Safety: safe
+
+=== liquid/lfm-2.5-1.2b-instruct:free ===
+(blink) Hhmmph… What do you want to know?! (idle) You’re not getting me, are you? (smirk) 
+
+[You asked about environment, so I've shown the required expressions]
+
+=== qwen/qwen3-next-80b-a3b-instruct:free ===
+(awkward blink)  
+I-It’s not like I was waiting for you or anything! Ugh, hi… what do *you* want? (Look away, slightly blushing)
+
+=== nvidia/llama-nemotron-rerank-vl-1b-v2:free ===
+ERROR 404: Provider returned error
+
+=== meta-llama/llama-3.3-70b-instruct:free ===
+ERROR 429: Provider returned error
+
+=== cognitivecomputations/dolphin-mistral-24b-venice-edition:free ===
+ERROR 429: Provider returned error
+
+=== meta-llama/llama-3.2-3b-instruct:free ===
+ERROR 429: Provider returned error
+
+=== nousresearch/hermes-3-llama-3.1-405b:free ===
+ERROR 429: Provider returned error
+
+=== qwen/qwen3-coder:free ===
+ERROR 429: Provider returned error
