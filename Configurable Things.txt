@@ -1,0 +1,27 @@
+--- List of configurable environment variables: 
+[>] PORT: 
+    default 3000
+    configures port the server will run on
+[>] OPENROUTER_API_KEY:
+    default to fail the request
+    configures the API key to authenticate requests to OpenRouter
+[>] OPENROUTER_MODEL: 
+    default "qwen/qwen3-next-80b-a3b-instruct:free"
+    configures the AI model the app will use
+[>] OPENROUTER_FALLBACKS:
+    default "openrouter/free"
+    configures the models that will be used if OPENROUTER_MODEL fails
+    suggested configuration (pick any 3): 
+        ["nvidia/nemotron-3-super-120b-a12b:free","google/gemma-4-31b-it:free","openrouter/free"]
+    Make sure that the array has no spaces, and that it contains less than 3 items
+[>] NOWARN_CONFIG:
+    default to warn
+    configures the logs to not warn about untrusted system prompts, ignore this 
+    if you cloned this repository directly from Ihavenochoised/NodeJS-AI-Chat-Wrapper
+
+--- List of configurable files:
+[config/promptPaths.json]:
+    List of different personalities that point to the location of the 
+    prompt text file
+[config/prompts/]:
+    AI model prompts that are referenced by [config/prompts]
