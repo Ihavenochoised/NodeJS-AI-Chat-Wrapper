@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -12,6 +17,7 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    overflow: hidden;
 }
 
 .chatbox {
@@ -20,7 +26,8 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
-    height: 600px;
+    height: min(600px, calc(100vh - 40px));
+    max-height: calc(100vh - 40px);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -58,6 +65,7 @@ body {
 .chatlogs {
     flex: 1;
     overflow-y: auto;
+    min-height: 0;
     padding: 20px;
     background: #f8f9fa;
 }
@@ -290,8 +298,13 @@ button:active {
 
 /* Responsive design */
 @media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
     .chatbox {
-        height: 80vh;
+        height: calc(100vh - 24px);
+        max-height: calc(100vh - 24px);
         max-width: 100%;
     }
 
