@@ -25,13 +25,17 @@ const DATE = new Date().toLocaleString();
 const EXPRESSIONS = '(idle) (smirk) (blink)'
 const MOTIONS = '';
 const promptConfigFileLocation = path.join(ROOT_DIR, 'config', 'promptPaths.json');
+
 console.log(':: Reading configuration file(s)...');
+
 if (!fs.existsSync(promptConfigFileLocation))
     console.warn('Cannot find system prompt paths. The system prompt will be empty.')
 else {
     let contents = fs.readFileSync(promptConfigFileLocation, 'utf-8');
     let lines = countNewlines(contents);
+
     console.log(`Parsing prompt configuration, ${lines} lines...`);
+
     let promptConfigPaths;
     let defaultPromptPath;
     try {
@@ -45,14 +49,18 @@ else {
         console.warn('Cannot find system prompt paths. The system prompt will be empty.');
     } else {
         console.log(':: Reading default system prompt...')
+
         let contents = fs.readFileSync(defaultPromptPath, 'utf-8')
         let lines = countNewlines(contents);
+
         console.log(`Default system prompt: ${lines} lines.`)
         if (!process.env.NOWARN_CONFIG) {
             console.warn(`Warning: Make sure you trust the file contents. If you have just cloned the repo from the official source (Ihavenochoised/NodeJS-AI-Chat-Wrapper), you may ignore this warning. The file contents of ${defaultPromptPath} will be evaluated directly. \nContinuing execution in 5 seconds. \nYou may disable this warning by adding "NOWARN_CONFIG=anyvalue" to the environment.`);
             await sleep(5);
         }
         console.log('Parsing system prompt...')
+
+        // Ehh what should I do with this eval lol, its bad practice but its not user code :/
         systemPrompt = eval('`' + contents + '`');
     }
 }
@@ -63,8 +71,11 @@ router.post('/chat', async (req, res) => {
         const freeMessageLimit = 5;
         const loggedIn = req.session.loggedIn || false;
 
-        const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openrouter/free';
+        const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'qwen/qwen3-next-80b-a3b-instruct:free';
         process.env.OPENROUTER_MODEL ? console.log(`Using ${OPENROUTER_MODEL}`) : console.log(`Using default model: ${OPENROUTER_MODEL}`);
+
+        const OPENROUTER_FALLBACKS = process.env.OPENROUTER_FALLBACKS || 'openrouter/free';
+        const fallbacks = JSON.parse(OPENROUTER_FALLBACKS);
 
         console.log('Received message:', message);
         console.log('Chat history length:', chatHistory ? chatHistory.length : 0);
@@ -102,8 +113,9 @@ router.post('/chat', async (req, res) => {
         // Call OpenRouter API with full conversation context
         const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
             model: OPENROUTER_MODEL,
+            models: fallbacks,
             messages: messages,
-            temperature: 0.9,
+            temperature: 0.85,
             reasoning: {
                 "exclude": true
             }
