@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import pageRouter from "./routes/routes.js";
 import apiRouter from "./routes/api.js";
+import loginRouter from "./routes/login.js";
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     secret: process.env.SESSION_SECRET || 'defaultsecretthatssuperlongandsecure1234567890!@#$%^&*()XYZ',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { 
         secure: false, // Set to true if using HTTPS
         httpOnly: true,
@@ -25,6 +26,7 @@ app.use(session({
 // 🧩 Routers
 app.use("/", pageRouter);
 app.use("/api", express.json(), apiRouter);
+app.use("/login", loginRouter);
 
 // 404 fallback
 app.use((req, res) => {
